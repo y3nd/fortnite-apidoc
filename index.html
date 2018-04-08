@@ -109,6 +109,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link" id="ruby-tab" data-toggle="tab" href="#ruby" role="tab" aria-controls="ruby" aria-selected="false">Ruby</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="java-tab" data-toggle="tab" href="#java" role="tab" aria-controls="ruby" aria-selected="false">Java</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content" id="examplesContent">
                                         <div class="tab-pane fade active in" id="nodejs" role="tabpanel" aria-labelledby="nodejs-tab">
@@ -151,7 +154,7 @@ request(options, (error, response, body) =&#x3E; {
 
     curl_close($curl);
 
-    print_r json_decode($result); 
+    print_r(json_decode($result)); 
 ?&#x3E;</code></pre>
                                         </div>
                                         <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="ruby-tab">
@@ -165,6 +168,31 @@ body = open("https://fortnite.y3n.co/v2/player/#{playerName}", "X-Key" => apiKey
 stats = JSON.parse(body)
 
 puts stats</code></pre>
+                                        </div>
+                                        <div class="tab-pane fade" id="java" role="tabpanel" aria-labelledby="java-tab">
+                                            <pre><code class="language-javascript">String user            = "robi62"; // Player in-game name
+String apiKey          = "Your API Key"; 
+String url             = "https://fortnite.y3n.co/v2/player/" + user;
+
+URL obj                = new URL(url);
+HttpURLConnection con  = (HttpURLConnection) obj.openConnection();
+
+con.setRequestMethod("GET");
+con.setRequestProperty("X-Key", apiKey);
+
+int responseCode 	  = con.getResponseCode();
+BufferedReader in     = new BufferedReader(new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+
+while ((inputLine = in.readLine()) != null) {
+        response.append(inputLine);
+}
+in.close();
+
+JSONObject response = new JSONObject(response.toString());
+
+System.out.println(response);</code></pre>
                                         </div>
                                     </div>
                                     <br>
