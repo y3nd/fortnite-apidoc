@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+    <title>Fortnite Stats API | Documentation</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fortnite-Stats API official documentation.">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    
+    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+</head> 
+
+<body class="body-blue">
+    <div class="page-wrapper">
+        <!-- ******Header****** -->
+        <header id="header" class="header">
+            <div class="container primary-header">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="./">
+                            <span class="text-highlight">API DOC</span><span class="text-bold">2.0</span>
+                        </a>
+                    </h1>
+                </div><!--//branding-->
+            </div><!--//container-->
+        </header><!--//header-->
+
+        <div class="doc-wrapper">
+            <div class="container">
+                <div class="doc-body">
+                    <div class="doc-content">
+                        <div class="content-inner">
+                            <section id="welcome-section" class="doc-section">
+                                <h1 class="section-title">Welcome <span class="badge badge-success" style="background:#44d33f">API Version: 2.0</span></h1>
+                                <div class="section-block">
+                                    <p>
+                                        Welcome to the Fortnite Stats Bot API v2.0 documentation. The v2.0 release is very laggy and contains bugs, this is why we're developping a new release: v3.0. <br><br>
+                                        v3.0 is still work in progress, it will contain many features and bug fixes. It will involve a new fresh server infrastructure.
+                                    </p>
+                                    <a href="https://discord.gg/A5GmHxa" class="btn btn-discord" target="_blank"><i class="fab fa-discord"></i>  Join our Support Discord</a>
+
+                                    <div class="section-block" style="margin-top: 15px;">
+                                        <h3 class="block-title">About</h3>
+                                        <p>
+                                            The Fortnite-Stats Bot API is an unofficial Fortnite API. It can be used for retrieving in-game stats of a player.<br>
+                                            The API is actually maintained and owned by <a href="https://y3n.co" target="_blank"><span class="badge" style="background:#2498e4;">@y3n</span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </section><!--//doc-section-->
+
+                            <section id="installation-section" class="doc-section">
+                                <h2 class="section-title">Getting started</h2>
+                                <div id="step1" class="section-block">
+                                    <h3 class="block-title">Authentication</h3>
+                                    <p>
+                                        All the APIs requires one mandatory header:<br>
+                                        <code class="key">X-Key</code> - the header that contains your API Key.<br><br>
+                                        You can generate your own API Key by simply sending <code>!getapikey</code> in private message to the Bot.<br>
+                                        Basic API access is limited to <b>2000</b> calls/day and to <b>1</b> req per second.<br><br>
+
+                                        You can check your daily quota left with the <code class="key">X-DayQuotaLeft</code> header sent by the server on each response.
+                                    </p>
+
+                                    <div class="callout-block callout-warning">
+                                        <div class="icon-holder">
+                                            <i class="fa fa-exclamation-circle"></i>
+                                        </div><!--//icon-holder-->
+                                        <div class="content">
+                                            <p>Your API Key is <u><b>unique</b></u> and you can get only one key, so <u><b>don't give it!</b></u></p>
+                                        </div><!--//content-->
+                                    </div><!--//callout-block-->
+                                </div><!--//section-block-->
+
+                                <div id="step2" class="section-block">
+                                    <h3 class="block-title">Response</h3>
+                                    <p>
+                                        Responses will be in the JSON format. See <a class="scrollto" href="#step3">Basic example</a> for an example of response.
+                                    </p>
+                                </div><!--//section-block-->
+
+                                <div id="step3" class="section-block">
+                                    <h3 class="block-title">Basic example</h3>
+                                    <p>
+                                        This example shows how to retrieve stats from a player using <a class="scrollto" href="#lookup"><code>GET /v2/player/{playerName}</code></a> endpoint.
+                                    </p>
+
+                                    <ul class="nav nav-tabs" id="examples" role="tablist">
+                                        <li class="nav-item active">
+                                            <a class="nav-link active" id="nodejs-tab" data-toggle="tab" href="#nodejs" role="tab" aria-controls="nodejs" aria-selected="true" aria-expanded="true">Node.js</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="php-tab" data-toggle="tab" href="#php" role="tab" aria-controls="php" aria-selected="false">PHP</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="ruby-tab" data-toggle="tab" href="#ruby" role="tab" aria-controls="ruby" aria-selected="false">Ruby</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="examplesContent">
+                                        <div class="tab-pane fade active in" id="nodejs" role="tabpanel" aria-labelledby="nodejs-tab">
+                                            <pre><code class="language-js">var request = require(&#x27;request&#x27;);
+
+var playerName = &#x22;robi62&#x22;; // Player in-game name
+var apiKey = &#x22;Your API Key&#x22;
+
+var options = {
+    method: &#x22;GET&#x22;,
+    url: &#x60;https://fortnite.y3n.co/v2/player/${playerName}&#x60;,
+    headers: {
+        &#x27;User-Agent&#x27;: &#x27;NodeJS Request&#x27;,
+        &#x27;X-Key&#x27;: apiKey;
+    }
+}
+
+request(options, (error, response, body) =&#x3E; {
+    if (!error &#x26;&#x26; response.statusCode == 200) {
+        var stats = JSON.parse(body);
+        console.log(stats);
+    } else {
+        console.log(error);
+    }
+})</code></pre>
+                                        </div>
+                                        <div class="tab-pane fade" id="php" role="tabpanel" aria-labelledby="php-tab">
+                                            <pre><code class="language-php">&#x3C;?php                                        
+    $curl        = curl_init();
+    $playerName  = &#x22;robi62&#x22;; // Player in-game name
+    $apiKey      = &#x22;Your API Key&#x22;;
+
+    $encoded_url = &#x22;https://fortnite.y3n.co/v2/player/&#x22; . $username;
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(&#x22;X-Key: &#x22; . $apiKey));
+    curl_setopt($curl, CURLOPT_URL, $encoded_url);
+    curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+    $result     = curl_exec($curl);
+
+    curl_close($curl);
+
+    print_r json_decode($result); 
+?&#x3E;</code></pre>
+                                        </div>
+                                        <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="ruby-tab">
+                                            <pre><code class="language-ruby">require 'open-uri'
+require 'json'
+
+playerName = 'robi62'
+apiKey = 'Your API Key'
+
+body = open("https://fortnite.y3n.co/v2/player/#{playerName}", "X-Key" => apiKey).read
+stats = JSON.parse(body)
+
+puts stats</code></pre>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    Expected output (values can change):
+                                    <pre><code class="language-javascript">{ br:
+    { profile: {},
+        stats:
+        { pc:
+            { solo:
+                { kills: 4561,
+                matchesPlayed: 511,
+                lastMatch: &#x27;2018-04-07T21:25:27.000Z&#x27;,
+                minutesPlayed: 5675,
+                wins: 157,
+                top10: 227,
+                top25: 297,
+                deaths: 354,
+                kpd: 12.884,
+                kpm: 8.926,
+                tpm: 11.106,
+                score: 37820,
+                winRate: 30.724 },
+              duo:
+                { /* Same as solo */ },
+              squad:
+                { /* Same as solo */ } 
+            } 
+        } 
+    },
+    stw: {},
+    lastUpdate: &#x27;2018-04-08T11:35:37.778Z&#x27;,
+    userID: &#x27;e7e64ae60a474437953e97548d5c1c42&#x27;,
+    displayName: &#x27;Robi62&#x27;,
+    displayNameLowerCase: &#x27;robi62&#x27;,
+    lastLookup: &#x27;2018-02-24T15:26:49.634Z&#x27;,
+    lastLookupUpdate: &#x27;2018-04-07T16:21:32.326Z&#x27;,
+    discordID: null 
+}</code></pre>
+                                </div><!--//section-block-->
+
+                                <div id="step4" class="section-block">
+                                    <h3 class="block-title">HTTP Codes</h3>
+                                    <p>
+                                        The API uses HTTP status codes to indicate success or failure of an API call. 
+                                        In general, status codes in the 2xx range means success. Commonly used HTTP status codes are listed below.
+                                    </p>
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Status Code</th>
+                                                <th scope="col">Description</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" class="ok">200</th>
+                                                <td>
+                                                    Success<br>
+                                                    <span class="solution">The request was successfully completed.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" class="error">503</th>
+                                                <td>
+                                                    Too many requests at the same time.<br>
+                                                    <span class="solution">The API is currently limited to 1 req/sec. Be a little bit more slow!</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" class="error">429</th>
+                                                <td>
+                                                    Daily quota exceeded.<br>
+                                                    <span class="solution">The actual quota is 2000 calls/day. Contact y3n to upgrade.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" class="error">403</th>
+                                                <td>
+                                                    Forbidden access.<br>
+                                                    <span class="solution">The API Key is missing in the headers or incorrect API Key.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" class="error">404</th>
+                                                <td>
+                                                    User not found.<br>
+                                                    <span class="solution">Verify that the user is using his <b>Epic Account name</b> and not PSN/Xbox account name.</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+
+                            <section id="endpoints-section" class="doc-section">
+                                <h1 class="section-title">Endpoints</h1>
+                                <div class="section-block">
+
+                                    <div class="section-block">
+                                        <h3 id="lookup" class="block-title">Lookup player stats</h3>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"><div class="badge" style="background:#3f84d3">GET</div> /v2/player/{playerName}</th>
+                                                </tr>
+                                            </thead>
+                                            <table class="table table-bordered endpoint-inside">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Description</th>
+                                                        <th>Shows player profile and stats</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Parameters</th>
+                                                        <th><code class="key">{playerName}</code> - Player name to lookup</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Returned values</th>
+                                                        <th>
+                                                            <ul>
+                                                                <li><code class="key">profile</code> - Player profile informations <div class="badge" style="background:#d33f3f">UNAVAILABLE</div></li>
+                                                                <li>
+                                                                    <code class="key">stats</code> - Player stats
+                                                                    <ul>
+                                                                        <li><code class="key">pc|ps4|xbox</code> - Stats on different platforms</li>
+                                                                        <ul>
+                                                                            <li><code class="key">solo</code> - Solo mode stats</li>
+                                                                            <li><code class="key">duo</code> - Duo mode stats</li>
+                                                                            <li><code class="key">squad</code> - Squad mode stats</li><br/>
+                                                                            <li><code class="key">solo|duo|squad</code> values:
+                                                                                    <ul>
+                                                                                        <li><code class="key">kills</code> - Number of kills</li>
+                                                                                        <li><code class="key">matchesPlayed</code> - Total of played matches</li>
+                                                                                        <li><code class="key">lastMatch</code> - DateTime of the last match played</li>
+                                                                                        <li><code class="key">minutesPlayed</code> - Total of minutes played</li>
+                                                                                        <li><code class="key">wins</code> - Total of winned matches</li>
+                                                                                        <li><code class="key">top10</code> - Total of Top 10</li>
+                                                                                        <li><code class="key">top25</code> - Total of Top 25</li>
+                                                                                        <li><code class="key">deaths</code> - Total of deaths</li>
+                                                                                        <li><code class="key">kpd</code> - Kills Per Death</li>
+                                                                                        <li><code class="key">kpm</code> - Kills Per Minute</li>
+                                                                                        <li><code class="key">tpm</code> - Time per Match</li>
+                                                                                        <li><code class="key">score</code> - Player score</li>
+                                                                                        <li><code class="key">winRate</code> - Wins ratio</li>
+                                                                                    </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ul>
+                                                                </li>
+                                                                <li><code class="key">stw</code> - Save The World stats <div class="badge" style="background:#d33f3f">UNAVAILABLE</div></li>
+                                                                <li><code class="key">lastUpdate</code> - Last update of the stats</li>
+                                                                <li><code class="key">userID</code> - Player ID</li>
+                                                                <li><code class="key">displayName | displayNameLowerCase</code> - Player full name</li>
+                                                                <li><code class="key">lastLookup | lastLookupUpdate</code> - DateTime of the last lookup of player stats</li>
+                                                                <li><code class="key">discordID</code> - Player Discord ID (<i>if it's linked</i>)</li>
+                                                            </ul>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Example request</th>
+                                                        <th>
+                                                            <code class="light request" style="width:100%">
+                                                                X-Key: DGHae1kl26sj5sd6dfim<br>
+                                                                GET /v2/player/robi62
+                                                            </code>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Example response</th>
+                                                        <th>
+                                                            <pre><code class="language-javascript">{ br:
+    { profile: {},
+        stats:
+        { pc:
+            { solo:
+                { kills: 4561,
+                matchesPlayed: 511,
+                lastMatch: &#x27;2018-04-07T21:25:27.000Z&#x27;,
+                minutesPlayed: 5675,
+                wins: 157,
+                top10: 227,
+                top25: 297,
+                deaths: 354,
+                kpd: 12.884,
+                kpm: 8.926,
+                tpm: 11.106,
+                score: 37820,
+                winRate: 30.724 },
+              duo:
+                { /* Same as solo */ },
+              squad:
+                { /* Same as solo */ } 
+            } 
+        } 
+    },
+    stw: {},
+    lastUpdate: &#x27;2018-04-08T11:35:37.778Z&#x27;,
+    userID: &#x27;e7e64ae60a474437953e97548d5c1c42&#x27;,
+    displayName: &#x27;Robi62&#x27;,
+    displayNameLowerCase: &#x27;robi62&#x27;,
+    lastLookup: &#x27;2018-02-24T15:26:49.634Z&#x27;,
+    lastLookupUpdate: &#x27;2018-04-07T16:21:32.326Z&#x27;,
+    discordID: null 
+}</code></pre>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </table>
+                                    </div>
+
+                                    <div class="section-block">
+                                        <h3 id="lookupm" class="block-title">Lookup player matches</h3>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"><div class="badge" style="background:#3f84d3">GET</div> /v2/player/{userID}/matches</th>
+                                                </tr>
+                                            </thead>
+                                            <table class="table table-bordered endpoint-inside">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Description</th>
+                                                        <th>Shows player matches</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Parameters</th>
+                                                        <th><code class="key">{userID}</code> - User ID to lookup</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Returned values</th>
+                                                        <th>
+                                                            <ul>
+                                                                <li><code class="key">_id</code> - Match ID</li>
+                                                                <li><code class="key">displayName | displayNameLowerCase</code> - Player full name</li>
+                                                                <li><code class="key">userID</code> - Player ID</li>
+                                                                <li><code class="key">device</code> - Match platform (<code class="key">pc|ps4|xbox</code>)</li>
+                                                                <li>
+                                                                    <code class="key">modes</code> - Match modes
+                                                                    <ul>
+                                                                        <li><code class="key">solo|duo|squad</code> - Number of matches played in the specified mode</li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li><code class="key">matchesPlayed</code> - Number of matches played</li>
+                                                                <li><code class="key">kills</code> - Player kills</li>
+                                                                <li><code class="key">score</code> - Player score</li>
+                                                                <li><code class="key">wins</code> - Player wins</li>
+                                                                <li><code class="key">minutesPlayed</code> - Player minutes played</li>
+                                                                <li>
+                                                                    <code class="key">tops</code> - Player top
+                                                                    <ul>
+                                                                        <li><code class="key">top10|top25</code> - Number of tops in all matches</li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li><code class="key">deaths</code> - Number of player deaths</li>
+                                                            </ul>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Example request</th>
+                                                        <th>
+                                                            <code class="light request" style="width:100%">
+                                                                X-Key: DGHae1kl26sj5sd6dfim<br>
+                                                                GET /v2/player/e7e64ae60a474437953e97548d5c1c42/matches
+                                                            </code>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Example response</th>
+                                                        <th>
+                                                            <pre><code class="language-javascript">[  
+    {  
+        "_id":"5aca25ab6b1e3f0590bbdbcc",
+        "displayName":"Robi62",
+        "displayNameLowerCase":"robi62",
+        "userID":"e7e64ae60a474437953e97548d5c1c42",
+        "device":"pc",
+        "date":"2018-04-08T14:21:42.000Z",
+        "modes":{  
+            "squad":1
+        },
+        "matchesPlayed":1,
+        "kills":1,
+        "score":163,
+        "wins":0,
+        "minutesPlayed":0,
+        "tops":{  
+
+        },
+        "deaths":1
+    },
+    // ...
+]</code></pre>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </table>
+                                        </div>
+                                        
+                                        <div class="section-block">
+                                        <h3 id="shop" class="block-title">Retrieving Shop items</h3>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"><div class="badge" style="background:#3f84d3">GET</div> /v2/shop</th>
+                                                </tr>
+                                            </thead>
+                                            <table class="table table-bordered endpoint-inside">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Description</th>
+                                                        <th>Returns all shop items</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Parameters</th>
+                                                        <th>No parameters</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Returned values</th>
+                                                        <th>
+                                                            <ul>
+                                                                <li><code class="key">refreshIntervalHrs</code> - Interval of refreshing</li>
+                                                                <li><code class="key">dailyPurchaseHrs</code> - Daily purchase hours</li>
+                                                                <li><code class="key">expiration</code> - DateTime of expiration</li>
+                                                                <li>
+                                                                    <code class="key">storefronts</code> - Store fronts
+                                                                    <ul>
+                                                                        <li><code class="key">name</code> - Item name</li>
+                                                                        <li>
+                                                                            <code class="key">catalogEntries</code> - Catalog's items
+                                                                            <ul>
+                                                                                <li><code class="key">offerId</code> - Offer's ID</li>
+                                                                                <li><code class="key">devName</code> - Dev name</li>
+                                                                                <li><code class="key">offerType</code> - Offer's type</li>
+                                                                                <li>
+                                                                                    <code class="key">prices</code> - Item prices
+                                                                                    <ul>
+                                                                                        <li><code class="key">currencyType</code> - Currency type</li>
+                                                                                        <li><code class="key">currencySubType</code> - Currency sub type</li>
+                                                                                        <li><code class="key">regularPrice</code> - Item regular price</li>
+                                                                                        <li><code class="key">finalPrice</code> - Item final price</li>
+                                                                                        <li><code class="key">saleExpiration</code> - DateTime of Item sale expiration</li>
+                                                                                        <li><code class="key">basePrice</code> - Item base price</li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <code class="key">categories</code> - Item categories
+                                                                                </li>
+                                                                                <li><code class="key">dailyLimit</code> - Item daily limit (<code class="key">-1</code> for null)</li>
+                                                                                <li><code class="key">weeklyLimit</code> - Item weekly limit (<code class="key">-1</code> for null)</li>
+                                                                                <li><code class="key">monthlyLimit</code> - Item monthly limit (<code class="key">-1</code> for null)</li>
+                                                                                <li>
+                                                                                    <code class="key">appStoreId</code> - Item app store ID
+                                                                                </li>
+                                                                                <li>
+                                                                                    <code class="key">requirements</code> - Item requirements
+                                                                                </li>
+                                                                                <li>
+                                                                                    <code class="key">metaInfo</code> - Item meta info 
+                                                                                    <ul>
+                                                                                        <li><code class="key">key</code> - Key</li>
+                                                                                        <li><code class="key">value</code> - Value</li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li><code class="key">catalogGroup</code> - Item catalog group</li>
+                                                                                <li><code class="key">catalogGroupPriority</code> - Item catalog group priority</li>
+                                                                                <li><code class="key">sortPriority</code> - Item sort priority</li>
+                                                                                <li><code class="key">title</code> - Item title</li>
+                                                                                <li><code class="key">shortDescription</code> - Item short description</li>
+                                                                                <li><code class="key">description</code> - Item description</li>
+                                                                                <li><code class="key">displayAssetPath</code> - Item description</li>
+                                                                                <li>
+                                                                                    <code class="key">itemGrants</code> - Item grants
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <li>
+                                                                        <code class="key">br</code> - Battle Royal items
+                                                                        <ul>
+                                                                            <li>
+                                                                                <code class="key">daily</code> - Daily BR items
+                                                                                <ul>
+                                                                                    <li><code class="key">name</code> - Item name</li>
+                                                                                    <li><code class="key">imgURL</code> - Item image URL</li>
+                                                                                    <li><code class="key">imgPNGURL</code> - Item image URL in PNG</li>
+                                                                                    <li><code class="key">subname</code> - Item subname</li>
+                                                                                    <li><code class="key">price</code> - Item price</li>
+                                                                                    <li><code class="key">rarity</code> - Item rarity</li>
+                                                                                    <li><code class="key">cosmeticType</code> - Item cosmetic type</li>
+                                                                                    <li><code class="key">type</code> - Item type</li>
+                                                                                    <li><code class="key">templateID</code> - Item template ID</li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li>
+                                                                        <code class="key">lastUpdate</code> - Last update DateTime of shop items
+                                                                    </li>
+                                                                </li>
+                                                            </ul>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Example request</th>
+                                                        <th>
+                                                            <code class="light request" style="width:100%">
+                                                                X-Key: DGHae1kl26sj5sd6dfim<br>
+                                                                GET /v2/shop
+                                                            </code>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col">Example response</th>
+                                                        <th>
+                                                            <pre><code class="language-javascript">{  
+   "refreshIntervalHrs":24,
+   "dailyPurchaseHrs":24,
+   "expiration":"2018-04-09T00:00:00.000Z",
+   "storefronts":[  
+      {  
+         "name":"BRSeason3",
+         "catalogEntries":[  
+            {  
+               "offerId":"E2D7975EFEC54A45900D8D9A6D9D273C",
+               "devName":"BRSeason3_BookLevel",
+               "offerType":"StaticPrice",
+               "prices":[  
+                  {  
+                     "currencyType":"MtxCurrency",
+                     "currencySubType":"",
+                     "regularPrice":150,
+                     "finalPrice":150,
+                     "saleExpiration":"9999-12-31T23:59:59.999Z",
+                     "basePrice":150
+                  }
+               ],
+               "categories":[  
+
+               ],
+               "dailyLimit":-1,
+               "weeklyLimit":-1,
+               "monthlyLimit":-1,
+               "appStoreId":[  
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  ""
+               ],
+               "requirements":[  
+
+               ],
+               "metaInfo":[  
+                  {  
+                     "key":"gift_box",
+                     "value":"GiftBox:gb_battlepass"
+                  }
+               ],
+               "catalogGroup":"",
+               "catalogGroupPriority":0,
+               "sortPriority":0,
+               "title":"Battle Pass Level",
+               "shortDescription":"",
+               "description":"Get great rewards now!",
+               "displayAssetPath":"",
+               "itemGrants":[  
+
+               ]
+            },
+            // ...
+         ]
+      }
+   ],
+    "br":{  
+      "daily":[  
+         {  
+            "name":"Fighter Kite",
+            "imgURL":"https://image.fnbr.co/glider/5ab1b85a9116ac5688c6d7d2/gallery.jpg",
+            "imgPNGURL":"https://image.fnbr.co/glider/5ab1b85a9116ac5688c6d7d2/png.png",
+            "subname":"Fighter Kite",
+            "price":500,
+            "rarity":"uncommon",
+            "cosmeticType":"glider",
+            "type":"daily",
+            "templateID":"AthenaGlider:glider_id_020_fighter"
+         },
+         // ...
+      ]
+    },
+   "lastUpdate":"2018-04-08T18:36:42.639Z"
+}</code></pre>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                         </table>
+                                        </div>
+
+                                        <div class="section-block">
+                                            <h3 id="gamestatus" class="block-title">Getting Fortnite status</h3>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"><div class="badge" style="background:#3f84d3">GET</div> /v2/gamestatus</th>
+                                                    </tr>
+                                                </thead>
+                                                <table class="table table-bordered endpoint-inside">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Description</th>
+                                                            <th>Shows actual Fortnite status</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col">Parameters</th>
+                                                            <th>No parameters</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col">Returned values</th>
+                                                            <th>
+                                                                <ul>
+                                                                    <li><code class="key">status</code> - Actual status of Fortnite (<code class="key">UP|DOWN</code>)</li>
+                                                                    <li><code class="key">message</code> - Message about the status</li>
+                                                                    <li><code class="key">maintenanceUri</code> - Maintenance URI</li>
+                                                                </ul>
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col">Example request</th>
+                                                            <th>
+                                                                <code class="light request" style="width:100%">
+                                                                    X-Key: DGHae1kl26sj5sd6dfim<br>
+                                                                    GET /v2/gamestatus
+                                                                </code>
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="col">Example response</th>
+                                                            <th>
+                                                                <pre><code class="language-javascript">{  
+   "status":"UP",
+   "message":"Fortnite is up.",
+   "maintenanceUri":null
+}</code></pre>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </table>
+                                        </div>
+                                </div>
+                            </section><!--//doc-section-->
+                            
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                    <div class="doc-sidebar hidden-xs">
+                        <nav id="doc-nav">
+                            <ul id="doc-menu" class="nav doc-menu" data-spy="affix">
+                                <li><a class="scrollto" href="#welcome-section">Welcome</a></li>
+                                <li>
+                                    <a class="scrollto" href="#installation-section">Getting started</a>
+                                    <ul class="nav doc-sub-menu">
+                                        <li><a class="scrollto" href="#step1">Authentication</a></li>
+                                        <li><a class="scrollto" href="#step2">Response</a></li>
+                                        <li><a class="scrollto" href="#step3">Basic example</a></li>
+                                        <li><a class="scrollto" href="#step4">HTTP Codes</a></li>
+                                    </ul><!--//nav-->
+                                </li>
+                                <li>
+                                    <a href="#endpoints-section" class="scrollto">Endpoints</a>
+                                    <ul class="nav doc-sub-menu">
+                                        <li><a class="scrollto" href="#lookup">Lookup player stats</a></li>
+                                        <li><a class="scrollto" href="#lookupm">Lookup player matches</a></li>
+                                        <li><a class="scrollto" href="#shop">Retrieving Shop items</a></li>
+                                        <li><a class="scrollto" href="#gamestatus">Getting Fortnite status</a></li>
+                                    </ul><!--//nav-->
+                                </li>
+                            </ul><!--//doc-menu-->
+                        </nav>
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+        
+    </div><!--//page-wrapper-->
+    
+    <footer id="footer" class="footer text-center">
+        <div class="container">
+            <small class="copyright">Copyright &copy; 2018 - Fornite Stats API Docs. Written with <i class="fa fa-heart"></i> by Atsushi.</small>
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <script type="text/javascript" src="assets/plugins/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/prism/prism.js"></script>    
+    <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>                                                                
+    <script type="text/javascript" src="assets/plugins/jquery-match-height/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    
+</body>
+</html> 
+
