@@ -110,7 +110,10 @@
                                             <a class="nav-link" id="ruby-tab" data-toggle="tab" href="#ruby" role="tab" aria-controls="ruby" aria-selected="false">Ruby</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="java-tab" data-toggle="tab" href="#java" role="tab" aria-controls="ruby" aria-selected="false">Java</a>
+                                            <a class="nav-link" id="java-tab" data-toggle="tab" href="#java" role="tab" aria-controls="java" aria-selected="false">Java</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-controls="python" aria-selected="false">Python</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="examplesContent">
@@ -194,6 +197,20 @@ JSONObject response = new JSONObject(response.toString());
 
 System.out.println(response);</code></pre>
                                         </div>
+                                        <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="python-tab">
+                                            <pre><code class="language-python">import requests
+
+playerName = 'robi62'
+apiKey = 'FHHsknmEjo8cVCV0bvyF'
+
+r = requests.get('https://fortnite.y3n.co/v2/player/' + playerName,
+                 headers={'X-Key': apiKey})
+
+if r.status_code == 200:
+    print(r.json())
+else:
+    print('An error occured.')</code></pre>
+                                        </div>
                                     </div>
                                     <br>
                                     Expected output (values can change):
@@ -218,6 +235,8 @@ System.out.println(response);</code></pre>
               duo:
                 { /* Same as solo */ },
               squad:
+                { /* Same as solo */ },
+              all:
                 { /* Same as solo */ } 
             } 
         } 
