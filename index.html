@@ -322,8 +322,9 @@ System.out.println(response);</code></pre>
                                                                         <ul>
                                                                             <li><code class="key">solo</code> - Solo mode stats</li>
                                                                             <li><code class="key">duo</code> - Duo mode stats</li>
-                                                                            <li><code class="key">squad</code> - Squad mode stats</li><br/>
-                                                                            <li><code class="key">solo|duo|squad</code> values:
+                                                                            <li><code class="key">squad</code> - Squad mode stats</li>
+                                                                            <li><code class="key">all</code> - All modes combined stats</li><br/>
+                                                                            <li><code class="key">solo|duo|squad|all</code> values:
                                                                                     <ul>
                                                                                         <li><code class="key">kills</code> - Number of kills</li>
                                                                                         <li><code class="key">matchesPlayed</code> - Total of played matches</li>
@@ -385,9 +386,11 @@ System.out.println(response);</code></pre>
               duo:
                 { /* Same as solo */ },
               squad:
+                { /* Same as solo */ },
+              all:
                 { /* Same as solo */ } 
             } 
-        } 
+        }
     },
     stw: {},
     lastUpdate: &#x27;2018-04-08T11:35:37.778Z&#x27;,
