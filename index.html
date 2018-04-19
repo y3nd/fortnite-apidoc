@@ -147,7 +147,7 @@ request(options, (error, response, body) =&#x3E; {
     $playerName  = &#x22;robi62&#x22;; // Player in-game name
     $apiKey      = &#x22;Your API Key&#x22;;
 
-    $encoded_url = &#x22;https://fortnite.y3n.co/v2/player/&#x22; . $username;
+    $encoded_url = &#x22;https://fortnite.y3n.co/v2/player/&#x22; . $playerName;
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(&#x22;X-Key: &#x22; . $apiKey));
     curl_setopt($curl, CURLOPT_URL, $encoded_url);
     curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
